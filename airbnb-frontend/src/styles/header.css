@@ -1,0 +1,229 @@
+/* ─────────────────────────────────────────────────
+   Top Header — logo · search · actions
+   ───────────────────────────────────────────────── */
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  z-index: 50;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* ── Logo ── */
+.site-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.site-header__logo-svg {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+/* ── Search bar ── */
+.site-header__search {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+  padding: 6px 6px 6px 20px;
+  flex: 1;
+  max-width: 440px;
+  transition: box-shadow 0.15s;
+}
+
+.site-header__search:focus-within {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.site-header__search input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  font-family: var(--font-body);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.site-header__search input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.site-header__search button {
+  background: var(--color-primary);
+  border: none;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.site-header__search button:hover {
+  background: #e0314f;
+}
+
+/* ── Right-hand actions ── */
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Become a host / Host dashboard link */
+.site-header__host-link {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: background 0.15s;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.site-header__host-link:hover {
+  background: var(--color-bg-muted);
+}
+
+/* ── Profile button (hamburger + avatar) ── */
+.site-header__profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: white;
+  padding: 6px 10px 6px 14px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.15s;
+}
+
+.site-header__profile-btn:hover {
+  box-shadow: var(--shadow-elevated);
+}
+
+/* Avatar circle — shows first letter of username */
+.site-header__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Inline greeting — shown NEXT TO the avatar when logged in (always visible) */
+.site-header__inline-greeting {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  padding-right: 2px;
+}
+
+/* ── Dropdown menu ── */
+.site-header__dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-elevated);
+  border: 1px solid var(--color-border);
+  min-width: 210px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.site-header__dropdown button {
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 11px 14px;
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.site-header__dropdown button:hover {
+  background: var(--color-bg-muted);
+}
+
+/* Greeting line inside dropdown (subtle) */
+.site-header__dropdown-greeting {
+  padding: 8px 14px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0;
+}
+
+/* Sign-up shown bold at top of logged-out dropdown */
+.site-header__dropdown-signup {
+  font-weight: 700 !important;
+}
+
+.site-header__dropdown-divider {
+  margin: 6px 0;
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .site-header__search {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header__search {
+    display: none;
+  }
+
+  .site-header__inline-greeting {
+    display: none;
+  }
+
+  .site-header__host-link {
+    display: none;
+  }
+}

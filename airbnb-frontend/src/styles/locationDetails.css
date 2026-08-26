@@ -1,0 +1,169 @@
+/* ─────────────────────────────────────────────────
+   Location Details Page
+   ───────────────────────────────────────────────── */
+
+.details-page {
+  padding: 32px 0 80px;
+}
+
+.details-page__status {
+  padding: 80px 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+}
+
+/* ── Heading block ── */
+.details-page__heading {
+  margin-bottom: 20px;
+}
+
+.details-page__heading h1 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.details-page__subheading {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ── Two-column body: main content + sticky calculator ── */
+.details-page__body {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 56px;
+  margin-top: 36px;
+  align-items: start;
+}
+
+/* ── Static content sections (left column) ── */
+.details-page__main {
+  /* Each section is separated by a bottom border */
+}
+
+.details-page__section {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.details-page__section:last-child {
+  border-bottom: none;
+}
+
+.details-page__section h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.details-page__section h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.details-page__meta {
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+  font-size: 14px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.details-page__meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.details-page__section p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* Amenities — 2-column grid */
+.details-page__amenities {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.details-page__amenities li {
+  font-size: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-page__amenities li::before {
+  content: '✓';
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Reviews — specific ratings grid */
+.details-page__ratings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 32px;
+}
+
+.details-page__rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.details-page__rating-row:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* Overall rating summary above the grid */
+.details-page__overall-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.details-page__overall-rating .rating-big {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.details-page__overall-rating .star-icon {
+  color: var(--color-primary);
+  font-size: 20px;
+}
+
+@media (max-width: 900px) {
+  .details-page__body {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .details-page__amenities {
+    grid-template-columns: 1fr;
+  }
+
+  .details-page__ratings-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,135 @@
+.cost-calculator {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevated);
+  padding: 24px;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.cost-calculator__header {
+  margin-bottom: 16px;
+}
+
+.cost-calculator__price {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cost-calculator__unit {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.cost-calculator__rating {
+  float: right;
+  font-size: 14px;
+}
+
+.cost-calculator__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cost-calculator__dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.cost-calculator__dates label {
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cost-calculator__dates label:first-child {
+  border-right: 1px solid var(--color-border);
+}
+
+.cost-calculator__dates input,
+.cost-calculator__guests input {
+  border: none;
+  font-size: 14px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  outline: none;
+}
+
+.cost-calculator__guests {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cost-calculator__reserve-btn {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+.cost-calculator__reserve-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cost-calculator__message {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.cost-calculator__message--error {
+  color: var(--color-error);
+}
+
+.cost-calculator__message--success {
+  color: var(--color-success);
+}
+
+.cost-calculator__breakdown {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.cost-calculator__row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-secondary);
+}
+
+.cost-calculator__row--discount {
+  color: var(--color-success);
+}
+
+.cost-calculator__row--total {
+  color: var(--color-text);
+  font-weight: 700;
+  border-top: 1px solid var(--color-border);
+  padding-top: 12px;
+}

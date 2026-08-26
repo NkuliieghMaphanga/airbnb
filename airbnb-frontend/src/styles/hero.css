@@ -1,0 +1,94 @@
+/* ─────────────────────────────────────────────────
+   Hero Banner
+   Full-bleed background image with gradient overlay,
+   headline, sub-copy and a clear call-to-action button
+   ───────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  height: 540px;
+  /* Atmospheric travel photo — falls back to brand gradient */
+  background-image: url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1600&q=80');
+  background-size: cover;
+  background-position: center 40%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Dark gradient scrim so white text is always legible */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.25) 60%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  color: white;
+  max-width: 600px;
+}
+
+.hero__content h1 {
+  font-size: 52px;
+  line-height: 1.08;
+  margin-bottom: 18px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero__content p {
+  font-size: 19px;
+  margin-bottom: 32px;
+  opacity: 0.95;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* CTA button — white pill with brand-coloured hover */
+.hero__cta {
+  background: white;
+  color: var(--color-text);
+  border: none;
+  padding: 16px 32px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: var(--shadow-elevated);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.hero__cta:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.hero__cta:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    height: 460px;
+  }
+  .hero__content h1 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    height: 380px;
+    background-position: center;
+  }
+  .hero__content h1 {
+    font-size: 30px;
+  }
+  .hero__content p {
+    font-size: 16px;
+  }
+}
