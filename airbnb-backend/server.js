@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -12,18 +13,20 @@ const reservationRoutes = require('./routes/reservationRoutes');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
-// Connect to MongoDB
-connectDB();
-
 const app = express();
 
 // ----- Global Middleware -----
-const allowedOrigins = (process.env.CLIENT_URLS || '').split(',').map((s) => s.trim()).filter(Boolean);
+const allowedOrigins = (process.env.CLIENT_URLS || '')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
     origin: allowedOrigins.length > 0 ? allowedOrigins : '*',
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -31,12 +34,15 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
-// Serve uploaded images statically
+// ----- Serve uploaded images statically -----
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ----- Health check -----
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ success: true, message: 'API is running' });
+  res.status(200).json({
+    success: true,
+    message: 'API is running',
+  });
 });
 
 // ----- Routes -----
@@ -49,9 +55,16 @@ app.use('/api/admin', adminRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
+// ----- Start server after MongoDB connects -----
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-});
 
-module.exports = app;
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('❌ Failed to connect to MongoDB:', err.message);
+    process.exit(1);
+  });
