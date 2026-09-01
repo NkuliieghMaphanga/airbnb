@@ -1,3 +1,11 @@
+/**
+ * HeroBanner
+ *
+ * Full-width hero section at the top of the Home page.
+ * Contains a headline, tagline, and a "Start exploring" CTA button that
+ * navigates the user to the New York location page as a demo destination.
+ * Background image and overlay are handled entirely in hero.css.
+ */
 import { useNavigate } from 'react-router-dom';
 import '../styles/hero.css';
 

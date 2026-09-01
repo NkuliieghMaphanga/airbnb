@@ -1,7 +1,25 @@
+/**
+ * DashboardPage
+ *
+ * Landing page of the admin portal.  Fetches platform-wide statistics from
+ * GET /api/admin/stats and displays them as four stat cards:
+ *   - Total Users
+ *   - Total Accommodations
+ *   - Total Reservations
+ *   - Total Revenue (sum of all reservation totalCost values)
+ *
+ * Also shows quick-navigation cards to the three main management sections.
+ * Uses React Router <Link> for SPA navigation (no full page reload).
+ */
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getStats } from '../api/admin.js';
 import '../styles/dashboard.css';
 
+/**
+ * StatCard — displays a single metric with an icon, coloured accent, and label.
+ * The --card-color CSS custom property drives the accent colour.
+ */
 function StatCard({ label, value, icon, color }) {
   return (
     <div className="stat-card" style={{ '--card-color': color }}>
@@ -49,27 +67,27 @@ export default function DashboardPage() {
       )}
 
       <div className="dashboard-links">
-        <a href="/users" className="dashboard-link">
+        <Link to="/users" className="dashboard-link">
           <span className="dashboard-link__icon">👥</span>
           <div>
             <p className="dashboard-link__title">Manage Users</p>
             <p className="dashboard-link__desc">View all users, promote to host or admin, or remove accounts.</p>
           </div>
-        </a>
-        <a href="/accommodations" className="dashboard-link">
+        </Link>
+        <Link to="/accommodations" className="dashboard-link">
           <span className="dashboard-link__icon">🏘️</span>
           <div>
             <p className="dashboard-link__title">Manage Accommodations</p>
             <p className="dashboard-link__desc">Create, edit, or delete any accommodation listing on the platform.</p>
           </div>
-        </a>
-        <a href="/reservations" className="dashboard-link">
+        </Link>
+        <Link to="/reservations" className="dashboard-link">
           <span className="dashboard-link__icon">📋</span>
           <div>
             <p className="dashboard-link__title">All Reservations</p>
             <p className="dashboard-link__desc">View and cancel any guest reservation across all listings.</p>
           </div>
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -1,3 +1,20 @@
+/**
+ * Reservation model
+ *
+ * Stores a guest's booking for a specific accommodation.
+ * The totalCost is computed server-side by the reservationController before
+ * the document is created — clients should never send it directly.
+ *
+ * Fields:
+ *   accommodation — ref to the booked Accommodation document
+ *   user          — ref to the guest User who made the booking
+ *   host          — ref to the host User who owns the listing (denormalised for
+ *                   fast host-scoped queries without a join to Accommodation)
+ *   checkIn/Out   — dates; checkOut must be strictly after checkIn (validated)
+ *   guests        — number of guests (must not exceed accommodation.guests)
+ *   totalCost     — computed: nights×price − discount + fees
+ *   status        — lifecycle state; defaults to 'confirmed' on creation
+ */
 const mongoose = require('mongoose');
 
 const ReservationSchema = new mongoose.Schema(

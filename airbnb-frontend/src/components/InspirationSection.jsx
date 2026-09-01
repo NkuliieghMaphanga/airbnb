@@ -1,3 +1,11 @@
+/**
+ * InspirationSection
+ *
+ * "Inspiration for your next trip" section on the Home page.
+ * Renders a responsive grid of destination cards sourced from the static
+ * `destinations` array in staticContent.js.  Each card links to the
+ * LocationPage for that destination.
+ */
 import { Link } from 'react-router-dom';
 import { destinations } from '../data/staticContent.js';
 import '../styles/sections.css';

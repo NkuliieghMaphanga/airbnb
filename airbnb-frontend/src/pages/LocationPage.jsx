@@ -1,3 +1,18 @@
+/**
+ * LocationPage
+ *
+ * Displays all accommodation listings for a given location.
+ *
+ * Features:
+ *   - Location search filter (text input) — submitting navigates to
+ *     /locations/:newTerm, re-triggering the data fetch via useEffect
+ *   - Heading showing total count: "N stays in <location>"
+ *   - Responsive list of location cards: image left, details right
+ *     (type, title, amenities, star rating, price per night)
+ *   - Error and empty-state messages
+ *
+ * Clicking a card navigates to /locations/:location/:id (LocationDetailsPage).
+ */
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getAccommodations } from '../api/accommodations.js';
@@ -85,7 +100,7 @@ export default function LocationPage() {
                 {(listing.amenities || []).slice(0, 3).join(' · ') || 'No amenities listed'}
               </p>
               <p className="location-card__rating">
-                ★ {listing.rating?.toFixed(1) || 'New'} ({listing.reviews || 0} reviews)
+                ★ {listing.rating > 0 ? listing.rating.toFixed(1) : 'New'} ({listing.reviews || 0} reviews)
               </p>
               <p className="location-card__price">
                 <strong>${listing.price}</strong> / night

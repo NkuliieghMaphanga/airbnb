@@ -182,3 +182,72 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Things to do (trip / home) ───────────────────────────────────────────── */
+.things-to-do-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  min-height: 360px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.things-to-do-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+.things-to-do-card__content {
+  position: relative;
+  padding: 36px 40px;
+  color: white;
+  max-width: 480px;
+}
+
+.things-to-do-card__content h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.things-to-do-card__content p {
+  font-size: 15px;
+  margin-bottom: 20px;
+  opacity: 0.92;
+  line-height: 1.5;
+}
+
+.things-to-do-card__btn {
+  background: white;
+  color: var(--color-text);
+  border: none;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.things-to-do-card__btn:hover {
+  opacity: 0.88;
+}
+
+@media (max-width: 600px) {
+  .things-to-do-card {
+    min-height: 280px;
+  }
+
+  .things-to-do-card__content {
+    padding: 24px 20px;
+  }
+
+  .things-to-do-card__content h2 {
+    font-size: 22px;
+  }
+}

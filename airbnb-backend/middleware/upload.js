@@ -1,3 +1,17 @@
+/**
+ * upload.js — Multer middleware for handling image file uploads.
+ *
+ * Files are saved to /uploads/ with a timestamp-based unique filename.
+ * The backend serves this directory statically at /uploads/* (see server.js).
+ *
+ * Constraints:
+ *   - Allowed types: JPEG, JPG, PNG, WebP
+ *   - Max file size: 5 MB per file
+ *
+ * Usage (in routes):
+ *   upload.array('images', 10)   — accept up to 10 images
+ *   upload.single('image')       — accept a single image
+ */
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');

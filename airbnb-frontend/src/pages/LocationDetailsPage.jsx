@@ -67,7 +67,7 @@ export default function LocationDetailsPage() {
       <header className="details-page__heading">
         <h1>{listing.type} in {listing.location}</h1>
         <p className="details-page__subheading">
-          <span>★ {listing.rating?.toFixed(2) || 'New'}</span>
+          <span>★ {listing.rating > 0 ? listing.rating.toFixed(2) : 'New'}</span>
           <span>·</span>
           <span>{listing.reviews || 0} review{listing.reviews !== 1 ? 's' : ''}</span>
           <span>·</span>
@@ -131,7 +131,7 @@ export default function LocationDetailsPage() {
               <h3>Reviews</h3>
               <div className="details-page__overall-rating">
                 <span className="star-icon">★</span>
-                <span className="rating-big">{listing.rating?.toFixed(2)}</span>
+                <span className="rating-big">{listing.rating > 0 ? listing.rating.toFixed(2) : 'New'}</span>
                 <span style={{ color: 'var(--color-text-secondary)', fontSize: 14 }}>
                   · {listing.reviews || 0} review{listing.reviews !== 1 ? 's' : ''}
                 </span>

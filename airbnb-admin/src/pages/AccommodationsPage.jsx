@@ -1,3 +1,13 @@
+/**
+ * AccommodationsPage
+ *
+ * Lists all accommodation listings in a searchable table.
+ * Admins can search by title or location, navigate to the edit form for any
+ * listing, or delete a listing after a confirmation prompt.
+ *
+ * Data is fetched from GET /api/accommodations (public route, all listings).
+ * Delete calls DELETE /api/accommodations/:id (admin JWT required).
+ */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllAccommodations, deleteAccommodation } from '../api/admin.js';

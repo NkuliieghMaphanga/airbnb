@@ -1,3 +1,10 @@
+/**
+ * db.js — MongoDB connection helper.
+ *
+ * Connects to MongoDB Atlas (or a local instance) using the URI in the
+ * MONGO_URI environment variable.  Called once at server startup in server.js.
+ * Exits the process on failure because the API cannot operate without a DB.
+ */
 const mongoose = require('mongoose');
 
 /**

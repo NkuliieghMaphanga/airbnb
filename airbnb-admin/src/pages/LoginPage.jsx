@@ -1,3 +1,22 @@
+/**
+ * LoginPage — Admin Portal
+ *
+ * Provides a login form for administrator accounts only.
+ *
+ * Validation:
+ *   - Email: required + regex format check (fires on blur and on submit)
+ *   - Password: required + minimum 6 characters
+ *   - Per-field inline error messages with ARIA live regions
+ *   - Server error banner for wrong credentials or non-admin accounts
+ *
+ * Auth flow:
+ *   1. Calls AuthContext.login(email, password)
+ *   2. AuthContext calls POST /api/users/login
+ *   3. If the returned user.role !== 'admin', throws "Access denied"
+ *   4. On success, stores JWT as 'admin_token' and navigates to /dashboard
+ *
+ * The hint box shows demo credentials and a reminder to run `npm run seed`.
+ */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';

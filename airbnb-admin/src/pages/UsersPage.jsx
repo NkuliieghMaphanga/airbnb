@@ -1,5 +1,20 @@
+/**
+ * UsersPage
+ *
+ * Lists every registered user on the platform.
+ * Admins can:
+ *   - Change a user's role inline via a <select> dropdown
+ *     (calls PATCH /api/admin/users/:id/role)
+ *   - Delete a user account after confirmation
+ *     (calls DELETE /api/admin/users/:id)
+ *
+ * The currently logged-in admin's own row has its role selector and delete
+ * button disabled to prevent accidental self-demotion or self-deletion.
+ *
+ * Role options are defined in the ROLES constant to stay in sync with the
+ * backend User model's enum values.
+ */
 import { useEffect, useState } from 'react';
-import { getAllUsers, updateUserRole, deleteUser } from '../api/admin.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import '../styles/table.css';
 

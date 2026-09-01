@@ -1,5 +1,18 @@
+/**
+ * ReservationsPage
+ *
+ * Displays all reservations across every listing on the platform.
+ * Admins can search by listing title, guest name/email, or status,
+ * and cancel any reservation via the Delete button.
+ *
+ * Data source: GET /api/admin/reservations (admin only, full population).
+ * Cancel calls: DELETE /api/reservations/:id
+ *
+ * The table populates accommodation title/location from the populated
+ * `accommodation` field, and guest username/email from the `user` field.
+ * Empty-state row shown when the search filter returns no matches.
+ */
 import { useEffect, useState } from 'react';
-import { getAllReservations, deleteReservation } from '../api/admin.js';
 import '../styles/table.css';
 
 export default function ReservationsPage() {

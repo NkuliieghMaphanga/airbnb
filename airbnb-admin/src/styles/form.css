@@ -64,3 +64,90 @@
   padding: 10px 14px;
   margin-bottom: 4px;
 }
+
+/* ── Image upload area ─────────────────────────────────────────────────────── */
+.field__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+
+.image-upload-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Hide the native file input; the <label> acts as the visible button */
+.image-upload-area__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.image-upload-area__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--color-bg-muted, #f7f7f7);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.image-upload-area__btn:hover {
+  background: #ececec;
+  border-color: #aaa;
+}
+
+.image-upload-area__info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.image-upload-area__filename {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.image-upload-area__clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.image-upload-area__clear:hover {
+  background: #ececec;
+  color: var(--color-text);
+}
+
+.image-upload-area__preview {
+  margin-top: 10px;
+  display: block;
+  max-width: 280px;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}

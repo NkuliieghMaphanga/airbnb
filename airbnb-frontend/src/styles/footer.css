@@ -73,14 +73,14 @@
   align-items: center;
 }
 
-.site-footer__socials a {
-  font-size: 13px;
-  font-weight: 600;
+.site-footer__social-link {
+  display: inline-flex;
+  align-items: center;
   color: var(--color-text-secondary);
   transition: color 0.15s;
 }
 
-.site-footer__socials a:hover {
+.site-footer__social-link:hover {
   color: var(--color-text);
 }
 

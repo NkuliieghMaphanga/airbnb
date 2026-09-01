@@ -85,7 +85,23 @@ const updateAccommodation = async (req, res, next) => {
       return res.status(403).json({ success: false, message: 'Not authorized to update this listing' });
     }
 
-    const updates = { ...req.body };
+    // Whitelist allowed update fields to prevent clients from overwriting
+    // protected fields such as 'host', '__v', or '_id'.
+    const ALLOWED_FIELDS = [
+      'title', 'description', 'location', 'type', 'guests', 'bedrooms',
+      'bathrooms', 'amenities', 'price', 'weeklyDiscount', 'cleaningFee',
+      'serviceFee', 'occupancyTaxes', 'enhancedCleaning', 'selfCheckIn',
+      'rating', 'reviews', 'specificRatings',
+    ];
+
+    const updates = {};
+    ALLOWED_FIELDS.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updates[field] = req.body[field];
+      }
+    });
+
+    // Image updates: file upload takes priority over URL array
     if (req.files && req.files.length > 0) {
       updates.images = req.files.map((file) => `/uploads/${file.filename}`);
     } else if (Array.isArray(req.body.images) && req.body.images.length > 0) {
