@@ -1,93 +1,166 @@
-/* ─────────────────────────────────────────────────
-   Location Details Page
-   ───────────────────────────────────────────────── */
-
 .details-page {
-  padding: 32px 0 80px;
+  padding: 28px 0 96px;
 }
 
+/* Loading / error status */
 .details-page__status {
-  padding: 80px 0;
+  padding: 100px 0;
   text-align: center;
   color: var(--color-text-secondary);
   font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-/* ── Heading block ── */
+/* ── Page heading ── */
 .details-page__heading {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .details-page__heading h1 {
-  font-size: 28px;
+  font-size: 26px;
+  font-weight: 700;
   line-height: 1.2;
   margin-bottom: 8px;
+  color: var(--color-text);
 }
 
 .details-page__subheading {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
-/* ── Two-column body: main content + sticky calculator ── */
+.details-page__subheading-dot {
+  color: var(--color-border-dark);
+}
+
+.details-page__subheading-rating {
+  font-weight: 700;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.details-page__subheading-underline {
+  font-weight: 600;
+  text-decoration: underline;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* ── Two-column body ── */
 .details-page__body {
   display: grid;
   grid-template-columns: 1.65fr 1fr;
-  gap: 56px;
-  margin-top: 36px;
+  gap: 64px;
+  margin-top: 40px;
   align-items: start;
 }
 
-/* ── Static content sections (left column) ── */
-.details-page__main {
-  /* Each section is separated by a bottom border */
-}
+/* ── Left — info sections ── */
+.details-page__main {}
 
 .details-page__section {
   padding: 28px 0;
   border-bottom: 1px solid var(--color-border);
 }
 
+.details-page__section:first-child {
+  padding-top: 0;
+}
+
 .details-page__section:last-child {
   border-bottom: none;
 }
 
-.details-page__section h2 {
+/* Host avatar row */
+.details-page__host-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.details-page__host-info h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.details-page__host-info p {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.details-page__host-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
   font-size: 22px;
-  margin-bottom: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.details-page__section h3 {
-  font-size: 18px;
-  margin-bottom: 12px;
-}
-
+/* Meta pills row */
 .details-page__meta {
   color: var(--color-text-secondary);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   font-size: 14px;
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .details-page__meta span {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  background: var(--color-bg-muted);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Section heading */
+.details-page__section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.details-page__section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--color-text);
 }
 
 .details-page__section p {
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--color-text-secondary);
 }
 
-/* Amenities — 2-column grid */
+/* Description read-more fade */
+.details-page__description {
+  position: relative;
+}
+
+/* Amenities — 2-column checklist */
 .details-page__amenities {
   list-style: none;
   padding: 0;
@@ -98,27 +171,52 @@
 }
 
 .details-page__amenities li {
-  font-size: 14px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  font-size: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
-.details-page__amenities li::before {
-  content: '✓';
+.details-page__amenities li:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.details-page__amenities-icon {
   color: var(--color-primary);
-  font-weight: 700;
-  font-size: 12px;
+  font-size: 18px;
   flex-shrink: 0;
+  width: 22px;
+  text-align: center;
 }
 
-/* Reviews — specific ratings grid */
+/* Reviews section */
+.details-page__overall-rating {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.details-page__overall-rating .rating-big {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.details-page__overall-rating .star-icon {
+  color: var(--color-primary);
+  font-size: 22px;
+}
+
 .details-page__ratings-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 32px;
+  gap: 0 48px;
 }
 
 .details-page__rating-row {
@@ -126,37 +224,36 @@
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  padding: 10px 0;
+  padding: 12px 0;
   border-bottom: 1px solid var(--color-border);
 }
 
-.details-page__rating-row:nth-last-child(-n+2) {
-  border-bottom: none;
-}
-
-/* Overall rating summary above the grid */
-.details-page__overall-rating {
+/* Rating bar */
+.details-page__rating-bar-wrap {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
 }
 
-.details-page__overall-rating .rating-big {
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1;
+.details-page__rating-bar {
+  width: 100px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-.details-page__overall-rating .star-icon {
-  color: var(--color-primary);
-  font-size: 20px;
+.details-page__rating-bar-fill {
+  height: 100%;
+  background: var(--color-text);
+  border-radius: 2px;
 }
 
-@media (max-width: 900px) {
+/* ── Responsive ── */
+@media (max-width: 1024px) {
   .details-page__body {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 40px;
   }
 
   .details-page__amenities {
@@ -165,5 +262,16 @@
 
   .details-page__ratings-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .details-page__heading h1 {
+    font-size: 22px;
+  }
+
+  .details-page__body {
+    gap: 28px;
+    margin-top: 24px;
   }
 }

@@ -1,31 +1,27 @@
 /**
- * Header — persistent top navigation bar.
+ * Header — Figma-accurate Airbnb navigation bar.
  *
- * Features:
- * - Airbnb SVG logo linking to home
- * - Location search bar (navigates to /locations/:query)
- * - "Become a host" link (logged-out) / "Host dashboard" link (host/admin)
- * - Profile button with hamburger + avatar initial
- * - Inline greeting "Hi, username" always visible next to avatar (logged-in)
- * - Dropdown menu: reservations, host dashboard, log out (logged-in)
- *                  sign up, log in, become a host (logged-out)
+ * Layout: Logo | Segmented search pill | Globe + Become a host + Profile menu
+ * The search pill has three segments: Where · Check in · Check out (desktop)
+ * collapsing to a single destination input on tablet/mobile.
  */
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import '../styles/header.css';
 
-function AirbnbLogo() {
+/* ── SVG icons ─────────────────────────────────────────────────────────────── */
+
+function AirbnbLogoSvg() {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      focusable="false"
-      className="site-header__logo-svg"
-    >
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true" focusable="false" className="site-header__logo-svg">
       <path
-        d="M16 1C7.163 1 0 8.163 0 17c0 8.836 7.163 16 16 16s16-7.164 16-16C32 8.163 24.837 1 16 1zm0 4c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm5.5 18H10.5a.5.5 0 0 1-.5-.5v-.5c0-3.038 2.686-5.5 6-5.5s6 2.462 6 5.5v.5a.5.5 0 0 1-.5.5z"
+        d="M16 0C7.163 0 0 7.163 0 16c0 8.836 7.163 16 16 16s16-7.164
+           16-16C32 7.163 24.837 0 16 0zm0 4c1.657 0 3 1.343 3 3s-1.343
+           3-3 3-3-1.343-3-3 1.343-3 3-3zm5.5 18H10.5a.5.5 0 0
+           1-.5-.5v-.5c0-3.038 2.686-5.5 6-5.5s6 2.462 6
+           5.5v.5a.5.5 0 0 1-.5.5z"
         fill="currentColor"
       />
     </svg>
@@ -35,43 +31,51 @@ function AirbnbLogo() {
 function SearchIcon() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" width="16" height="16">
-      <path
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2 2 6.925 2 13s4.925 11 11 11zm8-3 9 9"
-      />
+      <path fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round"
+        d="M13 24c6.075 0 11-4.925 11-11S19.075 2 13 2 2 6.925 2 13s4.925 11 11 11zm8-3 9 9" />
+    </svg>
+  );
+}
+
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" width="16" height="16"
+      fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="8" cy="8" r="6.5" />
+      <path d="M8 1.5C8 1.5 5.5 4.5 5.5 8s2.5 6.5 2.5 6.5S10.5 11.5 10.5 8 8 1.5 8 1.5z" />
+      <path d="M1.5 8h13" />
     </svg>
   );
 }
 
 function HamburgerIcon() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" width="16" height="16">
-      <rect y="6" width="32" height="2" rx="1" fill="currentColor" />
-      <rect y="15" width="32" height="2" rx="1" fill="currentColor" />
-      <rect y="24" width="32" height="2" rx="1" fill="currentColor" />
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" width="14" height="14">
+      <rect y="6"  width="32" height="2.5" rx="1.25" fill="currentColor" />
+      <rect y="15" width="32" height="2.5" rx="1.25" fill="currentColor" />
+      <rect y="24" width="32" height="2.5" rx="1.25" fill="currentColor" />
     </svg>
   );
 }
 
+/* ── Component ──────────────────────────────────────────────────────────────── */
+
 export default function Header() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery]     = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const menuRef  = useRef(null);
   const navigate = useNavigate();
   const { user, logout } = useAuth();
 
-  // Close dropdown when clicking outside
+  /* Close dropdown on outside click */
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handler = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
   }, []);
 
   const handleSearch = (e) => {
@@ -93,21 +97,39 @@ export default function Header() {
       <div className="site-header__inner container">
 
         {/* ── Logo ── */}
-        <Link to="/" className="site-header__logo" aria-label="airbnb home">
-          <AirbnbLogo />
+        <Link to="/" className="site-header__logo" aria-label="Airbnb home">
+          <AirbnbLogoSvg />
           <span>airbnb</span>
         </Link>
 
-        {/* ── Search bar ── */}
+        {/* ── Segmented search pill ── */}
         <form className="site-header__search" onSubmit={handleSearch} role="search">
-          <input
-            type="text"
-            placeholder="Search destinations"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            aria-label="Search destinations"
-          />
-          <button type="submit" aria-label="Search">
+          {/* Segment 1 — Where */}
+          <div className="site-header__search-segment">
+            <span className="site-header__search-label">Where</span>
+            <input
+              type="text"
+              placeholder="Search destinations"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Search destinations"
+            />
+          </div>
+
+          {/* Segment 2 — Check in (decorative on this demo) */}
+          <div className="site-header__search-segment">
+            <span className="site-header__search-label">Check in</span>
+            <span className="site-header__search-value">Add dates</span>
+          </div>
+
+          {/* Segment 3 — Check out (decorative on this demo) */}
+          <div className="site-header__search-segment">
+            <span className="site-header__search-label">Check out</span>
+            <span className="site-header__search-value">Add dates</span>
+          </div>
+
+          {/* Search submit button */}
+          <button type="submit" className="site-header__search-btn" aria-label="Search">
             <SearchIcon />
           </button>
         </form>
@@ -115,10 +137,10 @@ export default function Header() {
         {/* ── Right-hand actions ── */}
         <div className="site-header__actions" ref={menuRef}>
 
-          {/* Become a host / Host dashboard (outside dropdown for visibility) */}
+          {/* Become a host / Host dashboard */}
           {!user && (
             <Link to="/login?mode=register&role=host" className="site-header__host-link">
-              Become a host
+              Become a Host
             </Link>
           )}
           {isHost && (
@@ -127,23 +149,28 @@ export default function Header() {
             </Link>
           )}
 
-          {/* Profile button — hamburger + avatar + inline greeting when logged in */}
+          {/* Globe language button */}
+          <button className="site-header__globe-btn" type="button" aria-label="Change language">
+            <GlobeIcon />
+          </button>
+
+          {/* Profile pill */}
           <button
             className="site-header__profile-btn"
             onClick={() => setMenuOpen((v) => !v)}
             aria-haspopup="true"
             aria-expanded={menuOpen}
             aria-label="User menu"
+            type="button"
           >
             <HamburgerIcon />
-            {/* Inline greeting — always visible next to the avatar for logged-in users */}
             {user && (
               <span className="site-header__inline-greeting">
                 Hi, {user.username}
               </span>
             )}
             <span className="site-header__avatar" aria-hidden="true">
-              {user ? user.username.charAt(0).toUpperCase() : '?'}
+              {user ? user.username.charAt(0).toUpperCase() : '👤'}
             </span>
           </button>
 
@@ -152,18 +179,16 @@ export default function Header() {
             <div className="site-header__dropdown" role="menu">
               {user ? (
                 <>
-                  <p className="site-header__dropdown-greeting">Signed in as {user.role}</p>
-                  <button
-                    role="menuitem"
-                    onClick={() => { setMenuOpen(false); navigate('/reservations'); }}
-                  >
+                  <p className="site-header__dropdown-greeting">
+                    Signed in as {user.role}
+                  </p>
+                  <button role="menuitem"
+                    onClick={() => { setMenuOpen(false); navigate('/reservations'); }}>
                     My reservations
                   </button>
                   {isHost && (
-                    <button
-                      role="menuitem"
-                      onClick={() => { setMenuOpen(false); navigate('/host'); }}
-                    >
+                    <button role="menuitem"
+                      onClick={() => { setMenuOpen(false); navigate('/host'); }}>
                       Host dashboard
                     </button>
                   )}
@@ -174,25 +199,18 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <button
-                    role="menuitem"
-                    className="site-header__dropdown-signup"
-                    onClick={() => { setMenuOpen(false); navigate('/login?mode=register'); }}
-                  >
+                  <button role="menuitem" className="site-header__dropdown-signup"
+                    onClick={() => { setMenuOpen(false); navigate('/login?mode=register'); }}>
                     Sign up
                   </button>
-                  <button
-                    role="menuitem"
-                    onClick={() => { setMenuOpen(false); navigate('/login'); }}
-                  >
+                  <button role="menuitem"
+                    onClick={() => { setMenuOpen(false); navigate('/login'); }}>
                     Log in
                   </button>
                   <hr className="site-header__dropdown-divider" />
-                  <button
-                    role="menuitem"
-                    onClick={() => { setMenuOpen(false); navigate('/login?mode=register&role=host'); }}
-                  >
-                    Become a host
+                  <button role="menuitem"
+                    onClick={() => { setMenuOpen(false); navigate('/login?mode=register&role=host'); }}>
+                    Become a Host
                   </button>
                 </>
               )}

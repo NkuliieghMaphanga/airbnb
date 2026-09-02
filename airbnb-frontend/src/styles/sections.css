@@ -1,193 +1,99 @@
+/* ── Shared section wrapper ── */
 .section {
   padding: 56px 0;
+}
+
+.section--bordered {
   border-bottom: 1px solid var(--color-border);
 }
 
-.section__title {
-  font-size: 26px;
-  margin-bottom: 24px;
+.section__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
 }
 
-/* Inspiration / destination cards */
+.section__title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.3px;
+}
+
+.section__show-all {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* ════════════════════════════════════════════════
+   Destination / Inspiration cards
+   ════════════════════════════════════════════════ */
+
 .destination-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
 }
 
 .destination-card {
   display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .destination-card__image {
   border-radius: var(--radius-md);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   margin-bottom: 10px;
   background: var(--color-bg-muted);
+  position: relative;
 }
 
 .destination-card__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.35s ease;
+  transition: transform 0.4s ease;
 }
 
 .destination-card:hover .destination-card__image img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
 .destination-card__name {
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-text);
+  margin-bottom: 2px;
 }
 
 .destination-card__tagline {
   font-size: 13px;
   color: var(--color-text-secondary);
+  line-height: 1.4;
 }
 
-/* Experiences */
-.experience-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
+/* ════════════════════════════════════════════════
+   Things To Do — full-width image card
+   ════════════════════════════════════════════════ */
 
-.experience-card {
-  position: relative;
-  border-radius: var(--radius-lg);
-  min-height: 320px;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-}
-
-.experience-card__scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
-}
-
-.experience-card__content {
-  position: relative;
-  padding: 28px;
-  color: white;
-}
-
-.experience-card__content h3 {
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-
-.experience-card__content p {
-  font-size: 14px;
-  margin-bottom: 16px;
-  opacity: 0.95;
-}
-
-.experience-card__btn {
-  background: white;
-  color: var(--color-text);
-  border: none;
-  padding: 10px 18px;
-  border-radius: var(--radius-pill);
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Shop Airbnb */
-.shop-airbnb {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-  background: var(--color-bg-muted);
-  border-radius: var(--radius-lg);
-  padding: 40px;
-}
-
-.shop-airbnb__text h2 {
-  font-size: 28px;
-  margin-bottom: 12px;
-}
-
-.shop-airbnb__text p {
-  color: var(--color-text-secondary);
-  margin-bottom: 20px;
-  max-width: 380px;
-}
-
-.shop-airbnb__btn {
-  background: var(--color-text);
-  color: white;
-  border: none;
-  padding: 12px 22px;
-  border-radius: var(--radius-pill);
-  font-weight: 600;
-}
-
-.shop-airbnb__image img {
-  border-radius: var(--radius-md);
-  width: 100%;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  gap: 8px;
-  border-bottom: 1px solid var(--color-border);
-  margin-bottom: 20px;
-}
-
-.tabs__btn {
-  background: none;
-  border: none;
-  padding: 12px 4px;
-  margin-right: 24px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  border-bottom: 2px solid transparent;
-}
-
-.tabs__btn--active {
-  color: var(--color-text);
-  border-bottom-color: var(--color-text);
-  font-weight: 600;
-}
-
-.tabs__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 40px;
-}
-
-.tabs__list li {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 15px;
-}
-
-@media (max-width: 900px) {
-  .experience-grid,
-  .shop-airbnb,
-  .tabs__list {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Things to do (trip / home) ───────────────────────────────────────────── */
 .things-to-do-card {
   position: relative;
-  border-radius: var(--radius-lg);
-  min-height: 360px;
+  border-radius: var(--radius-xl);
+  min-height: 380px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -198,56 +104,334 @@
 .things-to-do-card__scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.65) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.0) 20%,
+    rgba(0, 0, 0, 0.68) 100%
+  );
 }
 
 .things-to-do-card__content {
   position: relative;
-  padding: 36px 40px;
+  padding: 40px 48px;
   color: white;
-  max-width: 480px;
+  max-width: 520px;
 }
 
 .things-to-do-card__content h2 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
   margin-bottom: 10px;
-  line-height: 1.25;
+  line-height: 1.2;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.2);
 }
 
 .things-to-do-card__content p {
   font-size: 15px;
-  margin-bottom: 20px;
-  opacity: 0.92;
-  line-height: 1.5;
+  line-height: 1.6;
+  margin-bottom: 22px;
+  opacity: 0.9;
 }
 
 .things-to-do-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: white;
   color: var(--color-text);
   border: none;
-  padding: 12px 22px;
+  padding: 13px 24px;
   border-radius: var(--radius-pill);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity var(--ease-fast), transform var(--ease-fast);
 }
 
 .things-to-do-card__btn:hover {
   opacity: 0.88;
+  transform: translateY(-1px);
 }
 
-@media (max-width: 600px) {
+/* ════════════════════════════════════════════════
+   Experiences — 2-column grid
+   ════════════════════════════════════════════════ */
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.experience-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  min-height: 340px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--ease-default);
+}
+
+.experience-card:hover {
+  transform: translateY(-3px);
+}
+
+.experience-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.0) 25%,
+    rgba(0, 0, 0, 0.62) 100%
+  );
+}
+
+.experience-card__content {
+  position: relative;
+  padding: 28px 32px;
+  color: white;
+}
+
+.experience-card__content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.experience-card__content p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  opacity: 0.90;
+}
+
+.experience-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  color: var(--color-text);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity var(--ease-fast);
+}
+
+.experience-card__btn:hover {
+  opacity: 0.88;
+}
+
+/* ════════════════════════════════════════════════
+   Shop Airbnb — gift card promo
+   ════════════════════════════════════════════════ */
+
+.shop-airbnb {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  background: linear-gradient(135deg, #f9f0ff 0%, #fff0f3 100%);
+  border-radius: var(--radius-xl);
+  padding: 56px 64px;
+}
+
+.shop-airbnb__text h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.shop-airbnb__text p {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 1.65;
+  margin-bottom: 28px;
+  max-width: 380px;
+}
+
+.shop-airbnb__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-text);
+  color: white;
+  border: none;
+  padding: 15px 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--ease-fast), transform var(--ease-fast);
+}
+
+.shop-airbnb__btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+.shop-airbnb__image {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.shop-airbnb__image img {
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 460px;
+  object-fit: cover;
+  box-shadow: var(--shadow-elevated);
+}
+
+/* ════════════════════════════════════════════════
+   Future Getaways — tab section
+   ════════════════════════════════════════════════ */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 28px;
+}
+
+.tabs__btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 0;
+  margin-right: 28px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color var(--ease-fast), border-color var(--ease-fast);
+  white-space: nowrap;
+  margin-bottom: -1px;
+}
+
+.tabs__btn:hover {
+  color: var(--color-text);
+}
+
+.tabs__btn--active {
+  color: var(--color-text);
+  border-bottom-color: var(--color-text);
+  font-weight: 700;
+}
+
+.tabs__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 56px;
+}
+
+.tabs__list li {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 15px;
+  color: var(--color-text);
+  gap: 12px;
+  cursor: pointer;
+  transition: color var(--ease-fast);
+}
+
+.tabs__list li:hover {
+  color: var(--color-primary);
+}
+
+.tabs__list li::after {
+  content: '→';
+  margin-left: auto;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+/* ════════════════════════════════════════════════
+   Responsive
+   ════════════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  .destination-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .destination-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-airbnb {
+    grid-template-columns: 1fr;
+    padding: 36px 32px;
+    gap: 28px;
+  }
+
+  .shop-airbnb__image {
+    justify-content: center;
+  }
+
+  .tabs__list {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
   .things-to-do-card {
-    min-height: 280px;
+    min-height: 300px;
   }
 
   .things-to-do-card__content {
-    padding: 24px 20px;
+    padding: 28px 28px;
   }
 
   .things-to-do-card__content h2 {
-    font-size: 22px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .destination-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .section {
+    padding: 40px 0;
+  }
+
+  .section__title {
+    font-size: 20px;
+  }
+
+  .shop-airbnb {
+    padding: 28px 24px;
+  }
+
+  .shop-airbnb__text h2 {
+    font-size: 24px;
   }
 }

@@ -1,9 +1,5 @@
-/* ─────────────────────────────────────────────────
-   Location Page — filter + horizontal listing cards
-   ───────────────────────────────────────────────── */
-
 .location-page {
-  padding: 36px 0 80px;
+  padding: 40px 0 96px;
 }
 
 /* ── Filter bar ── */
@@ -14,17 +10,24 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-card);
-  padding: 8px 8px 8px 20px;
-  max-width: 500px;
-  margin-bottom: 28px;
-  background: #fff;
+  padding: 8px 8px 8px 24px;
+  max-width: 520px;
+  margin-bottom: 32px;
+  background: var(--color-bg);
+  transition: box-shadow var(--ease-fast);
+}
+
+.location-filter:focus-within {
+  box-shadow: var(--shadow-search);
 }
 
 .location-filter label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-text-secondary);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-text);
   white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
 .location-filter input {
@@ -35,144 +38,262 @@
   font-family: var(--font-body);
   background: transparent;
   color: var(--color-text);
+  min-width: 0;
+}
+
+.location-filter input::placeholder {
+  color: var(--color-text-light);
 }
 
 .location-filter button {
   background: var(--color-primary);
   color: white;
   border: none;
-  padding: 10px 22px;
+  padding: 10px 24px;
   border-radius: var(--radius-pill);
+  font-family: var(--font-body);
   font-weight: 700;
   font-size: 14px;
-  transition: background 0.15s;
+  cursor: pointer;
   flex-shrink: 0;
+  transition: background var(--ease-fast);
 }
 
 .location-filter button:hover {
-  background: #e0314f;
+  background: var(--color-primary-dark);
 }
 
-/* ── Heading ── */
+/* ── Page heading ── */
 .location-page__heading {
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: 700;
   margin-bottom: 24px;
+  color: var(--color-text);
 }
 
+.location-page__count {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-left: 6px;
+}
+
+/* ── Error / empty states ── */
 .location-page__error {
   color: var(--color-error);
   background: #fdf2f0;
   border: 1px solid #f5c2b5;
   border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  margin-bottom: 20px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
   font-size: 14px;
 }
 
 .location-page__empty {
   color: var(--color-text-secondary);
   font-size: 15px;
+  padding: 40px 0;
 }
 
-/* ── Listing list ── */
+/* ── Listing grid — 2-column card layout on desktop ── */
 .location-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 
-/* ── Card — image LEFT, details RIGHT (per rubric) ── */
+/* ── Card — Figma listing card style ── */
 .location-card {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: #fff;
+  background: var(--color-bg);
   box-shadow: var(--shadow-card);
-  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  border: 1px solid var(--color-border);
   text-decoration: none;
   color: inherit;
+  transition: box-shadow var(--ease-default), transform var(--ease-default);
 }
 
 .location-card:hover {
   box-shadow: var(--shadow-elevated);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
+/* Card image */
 .location-card__image {
-  background: var(--color-bg-muted);
+  position: relative;
+  height: 220px;
   overflow: hidden;
-  /* Fixed height so all images are the same size */
-  height: 240px;
+  background: var(--color-bg-muted);
+  flex-shrink: 0;
 }
 
 .location-card__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.35s ease;
+  transition: transform 0.4s ease;
 }
 
 .location-card:hover .location-card__image img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
-/* Details column */
+/* Favourite heart badge */
+.location-card__wishlist {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  backdrop-filter: blur(4px);
+  transition: background var(--ease-fast), transform var(--ease-fast);
+}
+
+.location-card:hover .location-card__wishlist {
+  background: white;
+  transform: scale(1.1);
+}
+
+/* Card details */
 .location-card__details {
-  padding: 24px 28px;
+  padding: 16px 18px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
+  gap: 4px;
+  flex: 1;
+}
+
+.location-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.location-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.location-card__rating {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.location-card__rating svg {
+  color: var(--color-primary);
 }
 
 .location-card__type {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-}
-
-.location-card__details h3 {
-  font-size: 19px;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.2;
+  font-weight: 400;
 }
 
 .location-card__amenities {
   font-size: 13px;
   color: var(--color-text-secondary);
-}
-
-.location-card__rating {
-  font-size: 14px;
-  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .location-card__price {
-  margin-top: 10px;
-  font-size: 16px;
-  padding-top: 14px;
+  margin-top: 8px;
+  padding-top: 12px;
   border-top: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-text-secondary);
 }
 
 .location-card__price strong {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
 }
 
-@media (max-width: 700px) {
-  .location-card {
+/* ── Skeleton loader ── */
+.location-skeleton {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.location-skeleton__card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.location-skeleton__img {
+  height: 220px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.location-skeleton__body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.location-skeleton__line {
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.location-skeleton__line--short { width: 60%; }
+.location-skeleton__line--medium { width: 80%; }
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .location-list {
     grid-template-columns: 1fr;
+  }
+
+  .location-card__image {
+    height: 260px;
+  }
+}
+
+@media (max-width: 600px) {
+  .location-page {
+    padding: 28px 0 64px;
   }
 
   .location-card__image {
     height: 200px;
   }
 
-  .location-card__details {
-    padding: 16px 20px 20px;
+  .location-skeleton {
+    grid-template-columns: 1fr;
   }
 }

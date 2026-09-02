@@ -1,16 +1,15 @@
-/* ─────────────────────────────────────────────────
-   Image Gallery
-   Large image LEFT · 2×2 thumbnail grid RIGHT
-   ───────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════
+   Image Gallery — Figma: large main + 2×2 grid
+   ═══════════════════════════════════════════════ */
 
 .gallery {
   position: relative;
   display: grid;
   grid-template-columns: 1.6fr 1fr;
   gap: 8px;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  height: 440px;
+  height: 480px;
   background: var(--color-bg-muted);
 }
 
@@ -19,17 +18,18 @@
   background: var(--color-bg-muted);
   height: 100%;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .gallery__main img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.45s ease;
 }
 
-.gallery__main img:hover {
-  transform: scale(1.02);
+.gallery__main:hover img {
+  transform: scale(1.03);
 }
 
 /* ── 2×2 thumbnail grid ── */
@@ -44,6 +44,7 @@
 .gallery__thumb {
   background: var(--color-bg-muted);
   overflow: hidden;
+  cursor: pointer;
 }
 
 .gallery__thumb img {
@@ -53,22 +54,47 @@
   transition: transform 0.35s ease;
 }
 
-.gallery__thumb img:hover {
-  transform: scale(1.04);
+.gallery__thumb:hover img {
+  transform: scale(1.05);
+}
+
+/* ── "Show all photos" button ── */
+.gallery__show-all {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: white;
+  border: 1.5px solid var(--color-text);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+
+.gallery__show-all:hover {
+  background: var(--color-bg-muted);
 }
 
 /* ── Responsive ── */
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .gallery {
     grid-template-columns: 1fr;
     height: auto;
+    border-radius: var(--radius-lg);
   }
 
   .gallery__main {
     aspect-ratio: 16 / 9;
+    height: auto;
   }
 
-  /* Hide thumbnails on small screens — just show the hero image */
   .gallery__grid {
     display: none;
   }
