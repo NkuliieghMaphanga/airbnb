@@ -75,25 +75,53 @@ export default function CostCalculator({ listing }) {
 
       <form onSubmit={handleReserve} className="cost-calculator__form">
         <div className="cost-calculator__dates">
-          <label>
-            Check-in
-            <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} required />
-          </label>
-          <label>
-            Check-out
-            <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} required />
-          </label>
+          {/* Check-in — explicit id/htmlFor so clicking the label opens the picker */}
+          <div className="cost-calculator__date-cell cost-calculator__date-cell--left">
+            <label htmlFor="calc-checkin" className="cost-calculator__date-label">
+              Check-in
+            </label>
+            <input
+              id="calc-checkin"
+              type="date"
+              value={checkIn}
+              min={new Date().toISOString().split('T')[0]}
+              onChange={(e) => {
+                setCheckIn(e.target.value);
+                /* if check-out is now before check-in, clear it */
+                if (checkOut && e.target.value >= checkOut) setCheckOut('');
+              }}
+            />
+          </div>
+
+          {/* Check-out */}
+          <div className="cost-calculator__date-cell">
+            <label htmlFor="calc-checkout" className="cost-calculator__date-label">
+              Check-out
+            </label>
+            <input
+              id="calc-checkout"
+              type="date"
+              value={checkOut}
+              min={checkIn || new Date().toISOString().split('T')[0]}
+              onChange={(e) => setCheckOut(e.target.value)}
+            />
+          </div>
         </div>
-        <label className="cost-calculator__guests">
-          Guests
+
+        {/* Guests */}
+        <div className="cost-calculator__guests">
+          <label htmlFor="calc-guests" className="cost-calculator__date-label">
+            Guests
+          </label>
           <input
+            id="calc-guests"
             type="number"
             min={1}
             max={listing.guests}
             value={guests}
             onChange={(e) => setGuests(e.target.value)}
           />
-        </label>
+        </div>
 
         <button type="submit" className="cost-calculator__reserve-btn" disabled={status.type === 'loading'}>
           {status.type === 'loading' ? 'Reserving…' : 'Reserve'}

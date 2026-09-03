@@ -61,7 +61,8 @@
   grid-template-columns: 1fr 1fr;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  overflow: hidden;
+  /* visible so the native calendar popup is never clipped */
+  overflow: visible;
   transition: border-color var(--ease-fast);
 }
 
@@ -69,26 +70,38 @@
   border-color: var(--color-text);
 }
 
-.cost-calculator__dates label {
+/* Individual date cell */
+.cost-calculator__date-cell {
   padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--color-bg);
+  cursor: pointer;
+}
+
+.cost-calculator__date-cell--left {
+  border-right: 1px solid var(--color-border);
+}
+
+/* Uppercase micro-label above the input */
+.cost-calculator__date-label {
   font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.6px;
   color: var(--color-text);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-.cost-calculator__dates label:first-child {
-  border-right: 1px solid var(--color-border);
-}
-
-.cost-calculator__dates input {
+/* Date / number input — full width, no extra styling that hides the picker */
+.cost-calculator__dates input[type="date"],
+.cost-calculator__guests input[type="number"] {
   border: none;
   outline: none;
+  width: 100%;
+  min-height: 26px;
   font-size: 13px;
   font-family: var(--font-body);
   color: var(--color-text);
@@ -103,15 +116,11 @@
   border-top: none;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   padding: 10px 12px;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--color-text);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   margin-bottom: 12px;
+  background: var(--color-bg);
   transition: border-color var(--ease-fast);
 }
 
@@ -119,15 +128,16 @@
   border-color: var(--color-text);
 }
 
-.cost-calculator__guests input {
+.cost-calculator__guests input[type="number"] {
   border: none;
   outline: none;
-  font-size: 13px;
+  font-size: 14px;
   font-family: var(--font-body);
   color: var(--color-text);
   background: transparent;
   padding: 0;
-  width: 64px;
+  width: 100%;
+  min-height: 26px;
 }
 
 /* ── Reserve button ── */
