@@ -85,12 +85,12 @@ export default function LoginPage() {
       <div className="login-card">
         {/* Brand */}
         <div className="login-card__brand">
-          <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" className="login-card__logo">
-            <path
-              d="M16 1C7.163 1 0 8.163 0 17c0 8.836 7.163 16 16 16s16-7.164 16-16C32 8.163 24.837 1 16 1zm0 4c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm5.5 18H10.5a.5.5 0 0 1-.5-.5v-.5c0-3.038 2.686-5.5 6-5.5s6 2.462 6 5.5v.5a.5.5 0 0 1-.5.5z"
-              fill="#ff385c"
-            />
-          </svg>
+          {/* Pink avatar circle with white person silhouette */}
+          <div className="login-card__avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
           <h1>Admin Portal</h1>
           <p>Sign in with your administrator credentials</p>
         </div>

@@ -1,135 +1,242 @@
+/* ═══════════════════════════════════════════════
+   Cost Calculator — sticky booking widget
+   ═══════════════════════════════════════════════ */
+
 .cost-calculator {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-elevated);
   padding: 24px;
-  position: sticky;
-  top: 100px;
-  height: fit-content;
+  background: var(--color-bg);
 }
 
+/* ── Header: price + rating ── */
 .cost-calculator__header {
-  margin-bottom: 16px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 
 .cost-calculator__price {
-  font-size: 22px;
+  font-family: var(--font-display);
+  font-size: 24px;
   font-weight: 700;
+  color: var(--color-text);
 }
 
 .cost-calculator__unit {
-  color: var(--color-text-secondary);
   font-size: 14px;
+  color: var(--color-text-secondary);
 }
 
 .cost-calculator__rating {
-  float: right;
+  margin-left: auto;
   font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
+.cost-calculator__rating-star {
+  color: var(--color-primary);
+}
+
+/* ── Form ── */
 .cost-calculator__form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
 }
 
+/* Date grid — two side-by-side bordered segments */
 .cost-calculator__dates {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   overflow: hidden;
+  transition: border-color var(--ease-fast);
+}
+
+.cost-calculator__dates:focus-within {
+  border-color: var(--color-text);
 }
 
 .cost-calculator__dates label {
-  padding: 8px 10px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 10px 12px;
+  font-size: 10px;
+  font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
+  letter-spacing: 0.6px;
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
+  cursor: pointer;
 }
 
 .cost-calculator__dates label:first-child {
   border-right: 1px solid var(--color-border);
 }
 
-.cost-calculator__dates input,
-.cost-calculator__guests input {
+.cost-calculator__dates input {
   border: none;
-  font-size: 14px;
-  color: var(--color-text);
-  font-family: var(--font-body);
   outline: none;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
 }
 
+/* Guests input — sits directly below dates */
 .cost-calculator__guests {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
-  font-size: 11px;
-  font-weight: 600;
+  border: 1.5px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 10px;
+  font-weight: 800;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
+  letter-spacing: 0.6px;
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
+  margin-bottom: 12px;
+  transition: border-color var(--ease-fast);
 }
 
+.cost-calculator__guests:focus-within {
+  border-color: var(--color-text);
+}
+
+.cost-calculator__guests input {
+  border: none;
+  outline: none;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: transparent;
+  padding: 0;
+  width: 64px;
+}
+
+/* ── Reserve button ── */
 .cost-calculator__reserve-btn {
-  background: var(--color-primary);
+  width: 100%;
+  background: linear-gradient(135deg, #ff385c 0%, #e31c5f 100%);
   color: white;
   border: none;
-  padding: 14px;
+  padding: 16px;
   border-radius: var(--radius-pill);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 700;
   font-size: 16px;
-  margin-top: 6px;
+  letter-spacing: 0.2px;
+  margin-top: 4px;
+  cursor: pointer;
+  transition: opacity var(--ease-fast), transform var(--ease-fast), box-shadow var(--ease-fast);
+  box-shadow: 0 3px 12px rgba(255, 56, 92, 0.35);
+}
+
+.cost-calculator__reserve-btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 18px rgba(255, 56, 92, 0.45);
+}
+
+.cost-calculator__reserve-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 56, 92, 0.30);
 }
 
 .cost-calculator__reserve-btn:disabled {
-  opacity: 0.7;
+  opacity: 0.65;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
+/* Status messages */
 .cost-calculator__message {
   font-size: 13px;
-  margin-top: 4px;
+  line-height: 1.5;
+  margin-top: 8px;
+  padding: 10px 13px;
+  border-radius: var(--radius-sm);
 }
 
 .cost-calculator__message--error {
   color: var(--color-error);
+  background: #fdf2f0;
+  border: 1px solid #f5c2b5;
 }
 
 .cost-calculator__message--success {
   color: var(--color-success);
+  background: #f0faf0;
+  border: 1px solid #a8dba8;
 }
 
+/* ── Price breakdown ── */
 .cost-calculator__breakdown {
   margin-top: 20px;
-  padding-top: 16px;
+  padding-top: 18px;
   border-top: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  font-size: 14px;
+  gap: 14px;
 }
 
 .cost-calculator__row {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
   color: var(--color-text-secondary);
+}
+
+.cost-calculator__row span:first-child {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-style: dotted;
+  cursor: help;
 }
 
 .cost-calculator__row--discount {
   color: var(--color-success);
+  font-weight: 500;
+}
+
+.cost-calculator__row--discount span:first-child {
+  text-decoration: none;
 }
 
 .cost-calculator__row--total {
   color: var(--color-text);
   font-weight: 700;
+  font-size: 15px;
   border-top: 1px solid var(--color-border);
-  padding-top: 12px;
+  padding-top: 14px;
+  margin-top: 0;
+}
+
+.cost-calculator__row--total span:first-child {
+  text-decoration: none;
+}
+
+/* ── Charge note ── */
+.cost-calculator__charge-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: 10px;
 }

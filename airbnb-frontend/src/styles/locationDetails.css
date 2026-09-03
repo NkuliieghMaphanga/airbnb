@@ -1,10 +1,14 @@
+/* ═══════════════════════════════════════════════
+   Location Details Page — full listing view
+   ═══════════════════════════════════════════════ */
+
 .details-page {
-  padding: 28px 0 96px;
+  padding: 20px 0 96px;
 }
 
-/* Loading / error status */
+/* ── Loading / error status ── */
 .details-page__status {
-  padding: 100px 0;
+  padding: 80px 0;
   text-align: center;
   color: var(--color-text-secondary);
   font-size: 16px;
@@ -14,45 +18,117 @@
   gap: 16px;
 }
 
+.details-page__status-icon {
+  font-size: 48px;
+}
+
+.details-page__status-link {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* Spinner */
+.details-page__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Breadcrumb ── */
+.details-page__breadcrumb {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.details-page__breadcrumb a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+}
+
+.details-page__breadcrumb a:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
+.details-page__breadcrumb span:last-child {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
 /* ── Page heading ── */
 .details-page__heading {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .details-page__heading h1 {
   font-size: 26px;
   font-weight: 700;
   line-height: 1.2;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: var(--color-text);
+  letter-spacing: -0.3px;
 }
 
+/* Subheading row — star · reviews · location */
 .details-page__subheading {
-  font-size: 13px;
-  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
-}
-
-.details-page__subheading-dot {
-  color: var(--color-border-dark);
+  font-size: 14px;
 }
 
 .details-page__subheading-rating {
-  font-weight: 700;
-  color: var(--color-text);
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.details-page__subheading-star {
+  color: var(--color-primary);
+  font-size: 13px;
+}
+
+.details-page__subheading-dot {
+  color: var(--color-text-light);
+  font-size: 16px;
+  line-height: 1;
 }
 
 .details-page__subheading-underline {
   font-weight: 600;
   text-decoration: underline;
+  text-underline-offset: 2px;
   color: var(--color-text);
   cursor: pointer;
+  transition: color var(--ease-fast);
+}
+
+.details-page__subheading-underline:hover {
+  color: var(--color-primary);
+}
+
+.details-page__subheading-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
 }
 
 /* ── Two-column body ── */
@@ -64,44 +140,60 @@
   align-items: start;
 }
 
-/* ── Left — info sections ── */
+/* ── Left — sections ── */
 .details-page__main {}
 
 .details-page__section {
-  padding: 28px 0;
+  padding: 32px 0;
   border-bottom: 1px solid var(--color-border);
 }
 
-.details-page__section:first-child {
-  padding-top: 0;
+.details-page__section:first-child { padding-top: 0; }
+.details-page__section:last-child  { border-bottom: none; }
+
+/* Section headings */
+.details-page__section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-text);
+  letter-spacing: -0.2px;
 }
 
-.details-page__section:last-child {
-  border-bottom: none;
+.details-page__section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--color-text);
 }
 
-/* Host avatar row */
-.details-page__host-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.details-page__host-info h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.details-page__host-info p {
-  font-size: 13px;
+.details-page__section p,
+.details-page__description {
+  font-size: 15px;
+  line-height: 1.75;
   color: var(--color-text-secondary);
 }
 
+/* ── Host row (title section) ── */
+.details-page__host-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.details-page__host-info h2 { margin-bottom: 4px; }
+.details-page__host-info p  {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Small avatar circle (title section) */
 .details-page__host-avatar {
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--color-primary);
   color: white;
@@ -111,56 +203,101 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(255, 56, 92, 0.30);
 }
 
-/* Meta pills row */
+/* ── Meta pills ── */
 .details-page__meta {
-  color: var(--color-text-secondary);
-  margin-bottom: 16px;
-  font-size: 14px;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-bottom: 18px;
 }
 
 .details-page__meta span {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: var(--color-bg-muted);
-  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  padding: 6px 13px;
   border-radius: var(--radius-pill);
   font-size: 13px;
   font-weight: 500;
-}
-
-/* Section heading */
-.details-page__section h2 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 12px;
   color: var(--color-text);
 }
 
-.details-page__section h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  color: var(--color-text);
+/* ── Feature highlight rows ── */
+.details-page__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.details-page__section p {
+.details-page__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.details-page__highlight-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.details-page__highlight strong {
+  display: block;
   font-size: 15px;
-  line-height: 1.75;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 3px;
+}
+
+.details-page__highlight p {
+  font-size: 14px;
   color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
 }
 
-/* Description read-more fade */
-.details-page__description {
-  position: relative;
+/* ── Bedroom cards ── */
+.details-page__bedrooms {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
 }
 
-/* Amenities — 2-column checklist */
+.details-page__bedroom-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.details-page__bedroom-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.details-page__bedroom-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.details-page__bedroom-sub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ── Amenities — 2-column checklist with icons ── */
 .details-page__amenities {
   list-style: none;
   padding: 0;
@@ -184,25 +321,26 @@
   border-bottom: none;
 }
 
+/* Amenity icon column */
 .details-page__amenities-icon {
-  color: var(--color-primary);
-  font-size: 18px;
+  font-size: 20px;
   flex-shrink: 0;
-  width: 22px;
+  width: 26px;
   text-align: center;
+  line-height: 1;
 }
 
-/* Reviews section */
+/* ── Reviews ── */
 .details-page__overall-rating {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .details-page__overall-rating .rating-big {
   font-family: var(--font-display);
-  font-size: 48px;
+  font-size: 52px;
   font-weight: 700;
   line-height: 1;
   color: var(--color-text);
@@ -210,9 +348,16 @@
 
 .details-page__overall-rating .star-icon {
   color: var(--color-primary);
-  font-size: 22px;
+  font-size: 24px;
+  line-height: 1;
 }
 
+.details-page__review-count {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* Per-category grid */
 .details-page__ratings-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -226,17 +371,23 @@
   font-size: 14px;
   padding: 12px 0;
   border-bottom: 1px solid var(--color-border);
+  gap: 16px;
 }
 
-/* Rating bar */
+.details-page__rating-row:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+/* Bar component */
 .details-page__rating-bar-wrap {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .details-page__rating-bar {
-  width: 100px;
+  width: 80px;
   height: 4px;
   background: var(--color-border);
   border-radius: 2px;
@@ -247,21 +398,93 @@
   height: 100%;
   background: var(--color-text);
   border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* ── Host full section ── */
+.details-page__host-full {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.details-page__host-full-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(255, 56, 92, 0.30);
+}
+
+.details-page__host-joined {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-top: 4px !important;
+}
+
+/* ── House rules ── */
+.details-page__rules {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.details-page__rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.details-page__rule span {
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1.3;
 }
 
 /* ── Responsive ── */
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .details-page__body {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 0;
   }
 
+  /* Push calculator above sections on tablet */
+  .details-page__body > :last-child {
+    order: -1;
+    margin-bottom: 36px;
+  }
+}
+
+@media (max-width: 768px) {
   .details-page__amenities {
     grid-template-columns: 1fr;
   }
 
   .details-page__ratings-grid {
     grid-template-columns: 1fr;
+  }
+
+  .details-page__ratings-grid .details-page__rating-row:nth-last-child(-n+2) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .details-page__ratings-grid .details-page__rating-row:last-child {
+    border-bottom: none;
+  }
+
+  .details-page__bedrooms {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -270,8 +493,14 @@
     font-size: 22px;
   }
 
-  .details-page__body {
-    gap: 28px;
-    margin-top: 24px;
+  .details-page__host-full-avatar,
+  .details-page__host-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .details-page__bedrooms {
+    grid-template-columns: 1fr 1fr;
   }
 }

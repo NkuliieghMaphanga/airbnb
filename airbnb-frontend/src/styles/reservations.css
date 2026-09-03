@@ -1,73 +1,183 @@
+/* ═══════════════════════════════════════════════
+   Reservations Page — my bookings table
+   ═══════════════════════════════════════════════ */
+
 .reservations-page {
-  padding: 40px 0 80px;
+  padding: 40px 0 96px;
 }
 
 .reservations-page h1 {
-  font-size: 24px;
-  margin-bottom: 24px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  margin-bottom: 8px;
 }
 
+.reservations-page__subtitle {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 32px;
+}
+
+/* Status messages */
 .reservations-page__error {
   color: var(--color-error);
+  background: #fdf2f0;
+  border: 1px solid #f5c2b5;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
 .reservations-page__empty {
   color: var(--color-text-secondary);
+  font-size: 15px;
+  padding: 40px 0;
+  text-align: center;
 }
 
 .reservations-page__empty a {
   color: var(--color-primary);
-  font-weight: 600;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ── Table wrapper ── */
+.reservations-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
 }
 
 .reservations-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  min-width: 640px;
 }
 
 .reservations-table th {
   text-align: left;
   padding: 12px 16px;
   border-bottom: 2px solid var(--color-border);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--color-text-secondary);
-  font-size: 12px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--color-bg-muted);
+  white-space: nowrap;
 }
 
 .reservations-table td {
   padding: 14px 16px;
   border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+  color: var(--color-text);
 }
 
+.reservations-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.reservations-table tbody tr:hover td {
+  background: var(--color-bg-muted);
+}
+
+/* Listing name cell — link style */
+.reservations-table__listing a {
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.reservations-table__listing a:hover {
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+
+/* ── Status badge ── */
 .reservations-table__status {
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 600;
   text-transform: capitalize;
-  background: var(--color-bg-muted);
+  white-space: nowrap;
 }
 
 .reservations-table__status--confirmed {
   background: #e7f6e7;
-  color: var(--color-success);
+  color: #008a05;
 }
 
 .reservations-table__status--cancelled {
   background: #fbe9e7;
-  color: var(--color-error);
+  color: #c13515;
 }
 
-.reservations-table button {
+.reservations-table__status--pending {
+  background: #fff8e1;
+  color: #c47a00;
+}
+
+.reservations-table__status--completed {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+
+/* ── Cancel button — danger style ── */
+.reservations-table__cancel {
   background: none;
-  border: 1px solid var(--color-border);
+  border: 1px solid #f5c2b5;
   border-radius: var(--radius-pill);
   padding: 6px 14px;
+  font-family: var(--font-body);
   font-size: 13px;
   font-weight: 600;
+  color: var(--color-error);
+  cursor: pointer;
+  transition: background var(--ease-fast), border-color var(--ease-fast);
+  white-space: nowrap;
 }
 
-.reservations-table button:hover {
-  background: var(--color-bg-muted);
+.reservations-table__cancel:hover {
+  background: #fdf2f0;
+  border-color: var(--color-error);
+}
+
+.reservations-table__cancel:active {
+  background: #fbe9e7;
+}
+
+/* ── Loading skeleton ── */
+.reservations-page__loading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.reservations-page__skeleton-row {
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .reservations-page h1 {
+    font-size: 22px;
+  }
 }
