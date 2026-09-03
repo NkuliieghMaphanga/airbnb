@@ -1,16 +1,22 @@
 /**
- * Header — Figma-accurate Airbnb navigation bar.
+ * Header — Airbnb-style navigation bar.
  *
- * Layout: Logo | Segmented search pill | Globe + Become a host + Profile menu
- * The search pill has three segments: Where · Check in · Check out (desktop)
- * collapsing to a single destination input on tablet/mobile.
+ * Search pill: Where (text) | Check in (date) | Check out (date) | 🔍
+ * All three fields are fully interactive and the form navigates to
+ * /locations/:query when submitted.
+ *
+ * Bugs fixed vs previous version:
+ *  - Check-in / Check-out were static <span> elements — now real date inputs
+ *  - overflow:hidden on the pill clipped the calendar popup — removed
+ *  - Date segment dividers now use box-shadow instead of a ::before pseudo
+ *    element so they don't interfere with the date picker hit-test area
  */
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import '../styles/header.css';
 
-/* ── SVG icons ─────────────────────────────────────────────────────────────── */
+/* ─── Icons ──────────────────────────────────────────────────────────────── */
 
 function AirbnbLogoSvg() {
   return (
@@ -58,11 +64,19 @@ function HamburgerIcon() {
   );
 }
 
-/* ── Component ──────────────────────────────────────────────────────────────── */
+/* ─── Today's date as yyyy-mm-dd (used for min attribute) ─────────────────── */
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+/* ─── Component ──────────────────────────────────────────────────────────── */
 
 export default function Header() {
-  const [query, setQuery]     = useState('');
+  const [query,    setQuery]    = useState('');
+  const [checkIn,  setCheckIn]  = useState('');
+  const [checkOut, setCheckOut] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+
   const menuRef  = useRef(null);
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -78,10 +92,26 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  /* Search — requires at least a destination */
   const handleSearch = (e) => {
     e.preventDefault();
     const term = query.trim();
-    if (term) navigate(`/locations/${encodeURIComponent(term)}`);
+    if (!term) return;
+
+    // Build query string with optional dates
+    const params = new URLSearchParams();
+    if (checkIn)  params.set('checkIn',  checkIn);
+    if (checkOut) params.set('checkOut', checkOut);
+    const qs = params.toString();
+
+    navigate(`/locations/${encodeURIComponent(term)}${qs ? `?${qs}` : ''}`);
+  };
+
+  /* When check-in changes, clear check-out if it's now before check-in */
+  const handleCheckInChange = (e) => {
+    const val = e.target.value;
+    setCheckIn(val);
+    if (checkOut && val && val >= checkOut) setCheckOut('');
   };
 
   const handleLogout = () => {
@@ -91,6 +121,12 @@ export default function Header() {
   };
 
   const isHost = user && (user.role === 'host' || user.role === 'admin');
+
+  /* Format a yyyy-mm-dd string for display, e.g. "Jun 12" */
+  const fmtDate = (d) =>
+    d
+      ? new Date(d + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+      : null;
 
   return (
     <header className="site-header">
@@ -102,42 +138,90 @@ export default function Header() {
           <span>airbnb</span>
         </Link>
 
-        {/* ── Segmented search pill ── */}
-        <form className="site-header__search" onSubmit={handleSearch} role="search">
-          {/* Segment 1 — Where */}
-          <div className="site-header__search-segment">
-            <span className="site-header__search-label">Where</span>
+        {/* ════════════════════════════════════════════
+            Segmented search pill
+            Segment 1: Where  |  Segment 2: Check in
+            Segment 3: Check out  |  🔍 button
+            ════════════════════════════════════════════ */}
+        <form
+          className="site-header__search"
+          onSubmit={handleSearch}
+          role="search"
+          aria-label="Search accommodations"
+        >
+
+          {/* ── Segment 1 — Where ── */}
+          <div className="site-header__seg site-header__seg--where">
+            <label htmlFor="hdr-where" className="site-header__seg-label">Where</label>
             <input
+              id="hdr-where"
               type="text"
+              className="site-header__seg-input"
               placeholder="Search destinations"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              autoComplete="off"
               aria-label="Search destinations"
             />
           </div>
 
-          {/* Segment 2 — Check in (decorative on this demo) */}
-          <div className="site-header__search-segment">
-            <span className="site-header__search-label">Check in</span>
-            <span className="site-header__search-value">Add dates</span>
+          {/* ── Segment 2 — Check in ── */}
+          <div className="site-header__seg site-header__seg--date">
+            <label htmlFor="hdr-checkin" className="site-header__seg-label">Check in</label>
+            <input
+              id="hdr-checkin"
+              type="date"
+              className="site-header__seg-date"
+              value={checkIn}
+              min={todayStr()}
+              onChange={handleCheckInChange}
+              aria-label="Check-in date"
+            />
+            {/* Show friendly text when no date is chosen yet */}
+            {!checkIn && (
+              <span className="site-header__seg-placeholder" aria-hidden="true">
+                Add dates
+              </span>
+            )}
           </div>
 
-          {/* Segment 3 — Check out (decorative on this demo) */}
-          <div className="site-header__search-segment">
-            <span className="site-header__search-label">Check out</span>
-            <span className="site-header__search-value">Add dates</span>
+          {/* ── Segment 3 — Check out ── */}
+          <div className="site-header__seg site-header__seg--date">
+            <label htmlFor="hdr-checkout" className="site-header__seg-label">Check out</label>
+            <input
+              id="hdr-checkout"
+              type="date"
+              className="site-header__seg-date"
+              value={checkOut}
+              min={checkIn || todayStr()}
+              onChange={(e) => setCheckOut(e.target.value)}
+              aria-label="Check-out date"
+            />
+            {!checkOut && (
+              <span className="site-header__seg-placeholder" aria-hidden="true">
+                Add dates
+              </span>
+            )}
           </div>
 
-          {/* Search submit button */}
-          <button type="submit" className="site-header__search-btn" aria-label="Search">
+          {/* ── Search button ── */}
+          <button
+            type="submit"
+            className="site-header__search-btn"
+            aria-label="Search"
+          >
             <SearchIcon />
+            {/* Show "Search" text when both destination and dates are filled */}
+            {query && checkIn && checkOut && (
+              <span className="site-header__search-btn-text">Search</span>
+            )}
           </button>
+
         </form>
 
         {/* ── Right-hand actions ── */}
         <div className="site-header__actions" ref={menuRef}>
 
-          {/* Become a host / Host dashboard */}
           {!user && (
             <Link to="/login?mode=register&role=host" className="site-header__host-link">
               Become a Host
@@ -149,8 +233,11 @@ export default function Header() {
             </Link>
           )}
 
-          {/* Globe language button */}
-          <button className="site-header__globe-btn" type="button" aria-label="Change language">
+          <button
+            className="site-header__globe-btn"
+            type="button"
+            aria-label="Change language"
+          >
             <GlobeIcon />
           </button>
 
@@ -174,7 +261,7 @@ export default function Header() {
             </span>
           </button>
 
-          {/* ── Dropdown ── */}
+          {/* Dropdown */}
           {menuOpen && (
             <div className="site-header__dropdown" role="menu">
               {user ? (

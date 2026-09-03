@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════
-   Header — Airbnb Figma-accurate top navigation
+   Header — Airbnb navigation bar
    ═══════════════════════════════════════════════ */
 
 .site-header {
@@ -38,40 +38,54 @@
   flex-shrink: 0;
 }
 
-/* ─── Search bar — Figma pill with three segments ─── */
+/* ═══════════════════════════════════════════
+   Search pill
+   KEY FIX: NO overflow:hidden — that clips the
+   native date-picker calendar dropdown.
+   Dividers use box-shadow on each segment instead.
+   ═══════════════════════════════════════════ */
 .site-header__search {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-card);
   background: var(--color-bg);
-  max-width: 480px;
+  max-width: 560px;
   width: 100%;
   margin: 0 auto;
-  overflow: hidden;
+  /* overflow MUST stay visible — hidden clips date picker popups */
+  overflow: visible;
   transition: box-shadow var(--ease-fast);
-  cursor: pointer;
 }
 
 .site-header__search:focus-within {
   box-shadow: var(--shadow-search);
 }
 
-.site-header__search-segment {
+/* ─── Individual segment ─── */
+.site-header__seg {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px 18px;
-  flex: 1;
-  border: none;
-  background: transparent;
-  cursor: pointer;
+  padding: 8px 16px;
   position: relative;
+  cursor: pointer;
+  flex: 1;
   min-width: 0;
+  border-radius: 0;
+  background: transparent;
+  transition: background var(--ease-fast);
 }
 
-.site-header__search-segment + .site-header__search-segment::before {
+/* Hover highlight */
+.site-header__seg:hover {
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-pill);
+}
+
+/* Thin vertical divider between segments via box-shadow on the right edge */
+.site-header__seg + .site-header__seg::before {
   content: '';
   position: absolute;
   left: 0;
@@ -79,28 +93,42 @@
   height: 60%;
   width: 1px;
   background: var(--color-border);
+  pointer-events: none;
 }
 
-.site-header__search-label {
+/* Remove divider when prev segment is hovered / active */
+.site-header__seg:hover + .site-header__seg::before,
+.site-header__seg:focus-within + .site-header__seg::before {
+  opacity: 0;
+}
+
+/* Where segment gets more space */
+.site-header__seg--where {
+  flex: 1.4;
+  border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+}
+
+/* Date segments */
+.site-header__seg--date {
+  flex: 1;
+  position: relative; /* needed for the placeholder overlay */
+}
+
+/* ─── Micro-label (WHERE / CHECK IN / CHECK OUT) ─── */
+.site-header__seg-label {
   font-size: 11px;
   font-weight: 700;
   color: var(--color-text);
   white-space: nowrap;
   line-height: 1;
-  margin-bottom: 2px;
-  letter-spacing: 0.1px;
+  margin-bottom: 3px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  display: block;
 }
 
-.site-header__search-value {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* The actual input lives inside the first segment */
-.site-header__search input {
+/* ─── Text input (destination) ─── */
+.site-header__seg-input {
   border: none;
   outline: none;
   width: 100%;
@@ -109,32 +137,78 @@
   background: transparent;
   color: var(--color-text);
   padding: 0;
-  margin-top: 2px;
+  line-height: 1.4;
 }
 
-.site-header__search input::placeholder {
+.site-header__seg-input::placeholder {
   color: var(--color-text-light);
 }
 
-/* Search submit button — red circle with magnifier */
+/* ─── Date input ─── */
+.site-header__seg-date {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 13px;
+  font-family: var(--font-body);
+  background: transparent;
+  color: var(--color-text);
+  padding: 0;
+  cursor: pointer;
+  line-height: 1.4;
+  /* Ensure the calendar icon and spinner are always visible */
+  min-height: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── "Add dates" placeholder overlay ─────────────────────────────────────
+   Shows when no date is selected; sits behind the input so a click still
+   hits the real <input> and opens the calendar.
+   ─────────────────────────────────────────────────────────────────────── */
+.site-header__seg-placeholder {
+  position: absolute;
+  /* align with where the input value sits */
+  top: calc(8px + 11px + 3px + 2px); /* label height + gap + a little breathing room */
+  left: 16px;
+  font-size: 13px;
+  color: var(--color-text-light);
+  pointer-events: none;  /* click falls through to the real input */
+  z-index: 0;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* ─── Search submit button (red circle) ─── */
 .site-header__search-btn {
   flex-shrink: 0;
   background: var(--color-primary);
   border: none;
   color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  min-width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 6px;
+  gap: 6px;
+  margin: 6px 6px 6px 4px;
+  padding: 0 14px 0 12px;
+  cursor: pointer;
   transition: background var(--ease-fast), transform var(--ease-fast);
+  white-space: nowrap;
 }
 
 .site-header__search-btn:hover {
   background: var(--color-primary-dark);
-  transform: scale(1.05);
+  transform: scale(1.04);
+}
+
+/* Text shown when all three fields are filled */
+.site-header__search-btn-text {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-body);
 }
 
 /* ─── Right-hand actions ─── */
@@ -146,7 +220,6 @@
   flex-shrink: 0;
 }
 
-/* "Become a host" / "Host dashboard" text link */
 .site-header__host-link {
   font-size: 14px;
   font-weight: 600;
@@ -162,24 +235,24 @@
   background: var(--color-bg-muted);
 }
 
-/* Globe icon button */
 .site-header__globe-btn {
   background: none;
   border: none;
-  padding: 10px 10px;
+  padding: 10px;
   border-radius: var(--radius-pill);
   color: var(--color-text);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background var(--ease-fast);
+  cursor: pointer;
 }
 
 .site-header__globe-btn:hover {
   background: var(--color-bg-muted);
 }
 
-/* ─── Profile pill button (hamburger + avatar) ─── */
+/* ─── Profile pill ─── */
 .site-header__profile-btn {
   display: flex;
   align-items: center;
@@ -191,13 +264,13 @@
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--ease-fast);
   margin-left: 4px;
+  cursor: pointer;
 }
 
 .site-header__profile-btn:hover {
   box-shadow: var(--shadow-md);
 }
 
-/* Avatar circle */
 .site-header__avatar {
   width: 30px;
   height: 30px;
@@ -210,10 +283,8 @@
   font-size: 13px;
   font-weight: 700;
   flex-shrink: 0;
-  overflow: hidden;
 }
 
-/* Inline "Hi, name" greeting */
 .site-header__inline-greeting {
   font-size: 13px;
   font-weight: 600;
@@ -240,8 +311,7 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.site-header__dropdown button,
-.site-header__dropdown-item {
+.site-header__dropdown button {
   display: block;
   width: 100%;
   text-align: left;
@@ -279,32 +349,38 @@
   border-top: 1px solid var(--color-border);
 }
 
-/* ─── Responsive ─── */
+/* ═══════════════════════════════════════════
+   Responsive breakpoints
+   ═══════════════════════════════════════════ */
+
+/* Hide date segments below 1024 px — keep Where + button */
 @media (max-width: 1024px) {
   .site-header__search {
-    max-width: 380px;
+    max-width: 400px;
+  }
+
+  .site-header__seg--date {
+    display: none;
+  }
+
+  /* Remove the divider that would have been before the first hidden segment */
+  .site-header__seg--where + .site-header__seg--date::before {
+    display: none;
   }
 }
 
+/* Shrink search width further on medium screens */
 @media (max-width: 860px) {
   .site-header__inner {
-    grid-template-columns: auto 1fr auto;
     height: 70px;
   }
 
   .site-header__search {
     max-width: 280px;
   }
-
-  .site-header__search-segment:not(:first-child) {
-    display: none;
-  }
-
-  .site-header__search-segment + .site-header__search-segment::before {
-    display: none;
-  }
 }
 
+/* Hide the whole search bar on small screens */
 @media (max-width: 680px) {
   .site-header__inner {
     grid-template-columns: auto auto;
@@ -315,14 +391,8 @@
     display: none;
   }
 
-  .site-header__host-link {
-    display: none;
-  }
-
-  .site-header__globe-btn {
-    display: none;
-  }
-
+  .site-header__host-link,
+  .site-header__globe-btn,
   .site-header__inline-greeting {
     display: none;
   }
