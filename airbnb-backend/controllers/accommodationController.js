@@ -30,10 +30,18 @@ const createAccommodation = async (req, res, next) => {
  */
 const getAccommodations = async (req, res, next) => {
   try {
+    
     const filter = {};
-    if (req.query.location) {
-      filter.location = { $regex: req.query.location, $options: 'i' };
-    }
+
+const location = req.query.location?.trim();
+
+if (location && location.toLowerCase() !== 'all') {
+  filter.location = {
+    $regex: location,
+    $options: 'i',
+  };
+}
+  
 
     const accommodations = await Accommodation.find(filter)
       .populate('host', 'username email role')
