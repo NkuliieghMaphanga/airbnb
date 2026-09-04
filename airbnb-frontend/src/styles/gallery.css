@@ -1,12 +1,7 @@
-/* ═══════════════════════════════════════════════
-   Image Gallery — large main + 2×2 thumbnail grid
-   ═══════════════════════════════════════════════ */
-
 .gallery {
   position: relative;
   display: grid;
   grid-template-columns: 1.6fr 1fr;
-  gap: 8px;
   border-radius: var(--radius-xl);
   overflow: hidden;
   height: 480px;
@@ -16,8 +11,8 @@
 
 /* ── Main (large) image ── */
 .gallery__main {
-  background: var(--color-bg-muted);
   height: 100%;
+  width: 100%; 
   overflow: hidden;
   cursor: pointer;
 }

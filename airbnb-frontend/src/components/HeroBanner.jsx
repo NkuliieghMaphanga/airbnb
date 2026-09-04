@@ -34,7 +34,7 @@ export default function HeroBanner() {
         <button
           className="hero__cta"
           type="button"
-          onClick={() => navigate('/locations/New York')}
+          onClick={() => navigate('/locations/all')}
         >
           Start exploring
         </button>

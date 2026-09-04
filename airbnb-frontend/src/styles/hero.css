@@ -1,15 +1,14 @@
-/* ═══════════════════════════════════════════════
-   Hero Banner — full-viewport cinematic hero
-   ═══════════════════════════════════════════════ */
-
 .hero {
   position: relative;
-  height: 620px;
-  background-image: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1800&q=85');
+  height: 600px;
+  width: 100%;
+  background-image: url('https://images.unsplash.com/photo-1697807650304-907257330a3e?auto=format&fit=crop&w=1600&q=80');
   background-size: cover;
-  background-position: center 55%;
+  background-position: center center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 

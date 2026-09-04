@@ -11,18 +11,55 @@ import HostDashboardPage from './pages/HostDashboardPage.jsx';
 export default function App() {
   return (
     <div className="app-shell">
+
       <Header />
+
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/locations/:location" element={<LocationPage />} />
-          <Route path="/locations/:location/:id" element={<LocationDetailsPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/reservations" element={<ReservationsPage />} />
-          <Route path="/host" element={<HostDashboardPage />} />
+
+          <Route
+            path="/"
+            element={<HomePage />}
+          />
+
+          {/* ALL LOCATIONS */}
+          <Route
+            path="/locations"
+            element={<LocationPage />}
+          />
+
+          {/* ALL or specific location */}
+          <Route
+            path="/locations/:location"
+            element={<LocationPage />}
+          />
+
+          {/* Listing details */}
+          <Route
+            path="/locations/:location/:id"
+            element={<LocationDetailsPage />}
+          />
+
+          <Route
+            path="/login"
+            element={<LoginPage />}
+          />
+
+          <Route
+            path="/reservations"
+            element={<ReservationsPage />}
+          />
+
+          <Route
+            path="/host"
+            element={<HostDashboardPage />}
+          />
+
         </Routes>
       </main>
+
       <Footer />
+
     </div>
   );
 }
