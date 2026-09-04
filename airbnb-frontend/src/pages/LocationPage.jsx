@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getAccommodations } from '../api/accommodations.js';
+import { resolveImageUrl } from '../utils/imageUrl.js';
 import '../styles/location.css';
 
 function StarIcon() {
@@ -222,7 +223,7 @@ export default function LocationPage() {
               {/* Image */}
               <div className="location-card__image">
                 <img
-                  src={listing.images?.[0]}
+                  src={resolveImageUrl(listing.images?.[0])}
                   alt={listing.title}
                   loading="lazy"
                 />

@@ -11,6 +11,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllAccommodations, deleteAccommodation } from '../api/admin.js';
+import { resolveImageUrl } from '../utils/imageUrl.js';
 import '../styles/table.css';
 
 export default function AccommodationsPage() {
@@ -88,7 +89,7 @@ export default function AccommodationsPage() {
                     <td>
                       {l.images?.[0] ? (
                         <img
-                          src={l.images[0]}
+                          src={resolveImageUrl(l.images[0])}
                           alt={l.title}
                           className="table-thumb"
                         />

@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { getAccommodations, deleteAccommodation, createAccommodation } from '../api/accommodations.js';
 import { getHostReservations } from '../api/reservations.js';
+import { resolveImageUrl } from '../utils/imageUrl.js';
 import '../styles/hostDashboard.css';
 
 const TYPES = ['Entire apartment', 'Private room', 'Shared room', 'Entire house', 'Entire villa'];
@@ -263,7 +264,7 @@ export default function HostDashboardPage() {
             <div key={l._id} className="host-listing-card">
               <div className="host-listing-card__image">
                 {l.images?.[0] ? (
-                  <img src={l.images[0]} alt={l.title} loading="lazy" />
+                  <img src={resolveImageUrl(l.images[0])} alt={l.title} loading="lazy" />
                 ) : (
                   <div className="host-listing-card__no-image">No image</div>
                 )}

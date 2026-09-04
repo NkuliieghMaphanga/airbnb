@@ -32,26 +32,15 @@ export const getAccommodationById = (id) =>
  * Create a new accommodation listing.
  */
 export const createAccommodation = (data) => {
-  const isFormData = data instanceof FormData;
-
-  return api.post('/accommodations', data, {
-    headers: isFormData
-      ? { 'Content-Type': 'multipart/form-data' }
-      : {},
-  });
+  // Do not set Content-Type for FormData — axios adds the boundary automatically
+  return api.post('/accommodations', data);
 };
 
 /**
  * Update an existing accommodation listing.
  */
 export const updateAccommodation = (id, data) => {
-  const isFormData = data instanceof FormData;
-
-  return api.put(`/accommodations/${id}`, data, {
-    headers: isFormData
-      ? { 'Content-Type': 'multipart/form-data' }
-      : {},
-  });
+  return api.put(`/accommodations/${id}`, data);
 };
 
 /**

@@ -7,6 +7,7 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import '../styles/gallery.css';
+import { resolveImageUrl } from '../utils/imageUrl.js';
 
 /* ── Grid icon for "Show all photos" button ── */
 function GridIcon() {
@@ -77,7 +78,7 @@ function Lightbox({ images, title, startIndex, onClose }) {
         {/* Main image */}
         <img
           key={current}
-          src={images[current]}
+          src={resolveImageUrl(images[current])}
           alt={`${title} — photo ${current + 1} of ${total}`}
           className="gallery__lightbox-img"
         />
@@ -110,7 +111,7 @@ function Lightbox({ images, title, startIndex, onClose }) {
                 aria-label={`Go to photo ${i + 1}`}
                 aria-current={i === current}
               >
-                <img src={img} alt="" loading="lazy" />
+                <img src={resolveImageUrl(img)} alt="" loading="lazy" />
               </button>
             ))}
           </div>
@@ -144,7 +145,7 @@ export default function ImageGallery({ images = [], title = 'Listing' }) {
           onKeyDown={(e) => e.key === 'Enter' && open(0)}
         >
           {main && (
-            <img src={main} alt={`${title} — main photo`} loading="lazy" />
+            <img src={resolveImageUrl(main)} alt={`${title} — main photo`} loading="lazy" />
           )}
         </div>
 
@@ -160,7 +161,7 @@ export default function ImageGallery({ images = [], title = 'Listing' }) {
               aria-label={`View photo ${i + 2}`}
               onKeyDown={(e) => e.key === 'Enter' && open(i + 1)}
             >
-              <img src={img} alt={`${title} — photo ${i + 2}`} loading="lazy" />
+              <img src={resolveImageUrl(img)} alt={`${title} — photo ${i + 2}`} loading="lazy" />
             </div>
           ))}
         </div>

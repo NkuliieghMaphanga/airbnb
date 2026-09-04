@@ -11,7 +11,7 @@
  *   const { user, login, logout } = useAuth();
  */
 import { createContext, useContext, useEffect, useState } from 'react';
-import { loginRequest, registerRequest, getMeRequest } from '../api/auth';
+import { loginRequest, registerRequest, getMeRequest } from '../api/auth.js';
 
 const AuthContext = createContext(null);
 

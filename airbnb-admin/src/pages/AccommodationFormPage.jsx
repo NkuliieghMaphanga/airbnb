@@ -72,8 +72,8 @@ export default function AccommodationFormPage() {
   const [form, setForm] = useState(EMPTY_FORM);
 
   // File upload state — stores the File object selected by the user
-  const [imageFile, setImageFile] = useState(null);
-  // Preview URL generated from the selected File (revoked on unmount/change)
+  const [imageFiles, setImageFiles] = useState([]);
+  // Preview URL generated from the first selected File (revoked on unmount/change)
   const [previewUrl, setPreviewUrl] = useState('');
 
   const [loading, setLoading] = useState(isEdit);
@@ -142,24 +142,24 @@ export default function AccommodationFormPage() {
 
   // ── File input handler ───────────────────────────────────────────────────────
   const handleFileChange = (e) => {
-    const file = e.target.files?.[0] || null;
+    const files = e.target.files ? Array.from(e.target.files) : [];
 
     // Revoke any previous preview URL before creating a new one
     if (previewUrl) URL.revokeObjectURL(previewUrl);
 
-    if (file) {
-      setImageFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
+    if (files.length > 0) {
+      setImageFiles(files);
+      setPreviewUrl(URL.createObjectURL(files[0]));
     } else {
-      setImageFile(null);
+      setImageFiles([]);
       setPreviewUrl('');
     }
   };
 
-  /** Remove the selected file and reset the hidden input. */
+  /** Remove selected files and reset the hidden input. */
   const clearFile = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setImageFile(null);
+    setImageFiles([]);
     setPreviewUrl('');
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -169,9 +169,17 @@ export default function AccommodationFormPage() {
     e.preventDefault();
     setError('');
 
-    // Basic required-field validation
-    if (!form.title.trim() || !form.description.trim() || !form.location.trim() || !form.price) {
-      setError('Title, description, location and price are required.');
+    // Robust required-field validation with clear messages
+    const missing = [];
+    if (!form.title.trim()) missing.push('Title');
+    if (!form.description.trim()) missing.push('Description');
+    if (!form.location.trim()) missing.push('Location');
+    if (form.price === '' || form.price === null || Number(form.price) < 0) missing.push('Price');
+    if (Number(form.guests) < 1) missing.push('Guests (min 1)');
+    if (Number(form.bedrooms) < 0) missing.push('Bedrooms');
+    if (Number(form.bathrooms) < 0) missing.push('Bathrooms');
+    if (missing.length) {
+      setError(`Please fix: ${missing.join(', ')}.`);
       return;
     }
 
@@ -182,7 +190,7 @@ export default function AccommodationFormPage() {
       .filter(Boolean);
 
     // For new listings, require at least one image (file OR URL)
-    if (!isEdit && !imageFile && urlImages.length === 0) {
+    if (!isEdit && imageFiles.length === 0 && urlImages.length === 0) {
       setError('Please upload an image file or enter at least one image URL.');
       return;
     }
@@ -192,7 +200,7 @@ export default function AccommodationFormPage() {
 
       let payload;
 
-      if (imageFile) {
+      if (imageFiles.length > 0) {
         // ── Mode 1: file upload — build FormData ──────────────────────────────
         // axios will automatically set Content-Type: multipart/form-data with
         // the correct boundary when the data argument is a FormData instance.
@@ -219,8 +227,8 @@ export default function AccommodationFormPage() {
         // Amenities — append each item separately so Express can parse the array
         form.amenities.forEach((a) => fd.append('amenities', a));
 
-        // Attach the image file under the key the backend's multer expects
-        fd.append('images', imageFile);
+        // Attach image files under the key the backend's multer expects
+        imageFiles.forEach((file) => fd.append('images', file));
 
         payload = fd;
       } else {
@@ -447,24 +455,27 @@ export default function AccommodationFormPage() {
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,image/jpg"
+              multiple
               id="image-file-input"
               className="image-upload-area__input"
               onChange={handleFileChange}
             />
             <label htmlFor="image-file-input" className="image-upload-area__btn">
-              {imageFile ? '📎 Change file' : '📁 Choose image…'}
+              {imageFiles.length > 0 ? `📎 Change files (${imageFiles.length})` : '📁 Choose image(s)…'}
             </label>
 
-            {/* File name + clear button once a file is chosen */}
-            {imageFile && (
+            {/* File names + clear button once files are chosen */}
+            {imageFiles.length > 0 && (
               <div className="image-upload-area__info">
-                <span className="image-upload-area__filename">{imageFile.name}</span>
+                <span className="image-upload-area__filename">
+                  {imageFiles.map((f) => f.name).join(', ')}
+                </span>
                 <button
                   type="button"
                   className="image-upload-area__clear"
                   onClick={clearFile}
-                  aria-label="Remove selected file"
+                  aria-label="Remove selected files"
                 >
                   ✕
                 </button>

@@ -13,6 +13,7 @@
  * Empty-state row shown when the search filter returns no matches.
  */
 import { useEffect, useState } from 'react';
+import { getAllReservations, deleteReservation } from '../api/admin.js';
 import '../styles/table.css';
 
 export default function ReservationsPage() {
@@ -34,7 +35,7 @@ export default function ReservationsPage() {
     setActionError('');
     try {
       await deleteReservation(id);
-      setReservations((prev) => prev.filter((r) => r._id !== id));
+      setReservations((prev) => prev.filter((r) => String(r._id) !== String(id)));
     } catch (err) {
       setActionError(err.response?.data?.message || 'Could not cancel reservation.');
     }

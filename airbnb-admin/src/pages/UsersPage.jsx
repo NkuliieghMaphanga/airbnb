@@ -16,6 +16,7 @@
  */
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
+import { getAllUsers, updateUserRole, deleteUser } from '../api/admin.js';
 import '../styles/table.css';
 
 const ROLES = ['user', 'host', 'admin'];
@@ -38,7 +39,9 @@ export default function UsersPage() {
     setActionError('');
     try {
       const res = await updateUserRole(id, role);
-      setUsers((prev) => prev.map((u) => (u._id === id ? { ...u, role: res.data.data.role } : u)));
+      setUsers((prev) =>
+        prev.map((u) => (String(u._id) === String(id) ? { ...u, role: res.data.data.role } : u))
+      );
     } catch (err) {
       setActionError(err.response?.data?.message || 'Could not update role.');
     }
@@ -49,7 +52,7 @@ export default function UsersPage() {
     setActionError('');
     try {
       await deleteUser(id);
-      setUsers((prev) => prev.filter((u) => u._id !== id));
+      setUsers((prev) => prev.filter((u) => String(u._id) !== String(id)));
     } catch (err) {
       setActionError(err.response?.data?.message || 'Could not delete user.');
     }
@@ -83,7 +86,7 @@ export default function UsersPage() {
                 <tr key={u._id}>
                   <td>
                     <strong>{u.username}</strong>
-                    {u._id === me?.id && <span className="badge badge--me"> (you)</span>}
+                    {String(u._id) === String(me?.id) && <span className="badge badge--me"> (you)</span>}
                   </td>
                   <td>{u.email}</td>
                   <td>
@@ -91,7 +94,7 @@ export default function UsersPage() {
                       className="role-select"
                       value={u.role}
                       onChange={(e) => handleRoleChange(u._id, e.target.value)}
-                      disabled={u._id === me?.id}
+                      disabled={String(u._id) === String(me?.id)}
                     >
                       {ROLES.map((r) => (
                         <option key={r} value={r}>
@@ -105,7 +108,7 @@ export default function UsersPage() {
                     <button
                       className="btn btn--danger btn--sm"
                       onClick={() => handleDelete(u._id, u.username)}
-                      disabled={u._id === me?.id}
+                      disabled={String(u._id) === String(me?.id)}
                     >
                       Delete
                     </button>
